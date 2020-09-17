@@ -17,8 +17,19 @@ module Enumerable
     # Code here
   end
 
-  def my_all?
-    # Code here
+  def my_all?(arg = nil)
+    if !arg.nil? && arg.is_a?(Class)
+      my_each { |_class| return false unless _class.is_a? arg }
+    elsif !arg.nil? && arg.is_a?(Integer)
+      my_each { |_int| return false unless _int == arg }
+    elsif !arg.nil? && arg.is_a?(String) || arg.is_a?(Regexp)
+      my_each { |_str| return false unless _str.match(arg) }
+    elsif !block_given?
+      my_each { |res| return false if res.nil? || !res }
+    else
+      my_each { |res| return false unless yield(res) }
+    end
+    true
   end
 
   def my_any?
