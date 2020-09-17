@@ -14,4 +14,16 @@ module Enumerable
         my_each {|item| my_array << item if yield(item)}
         my_array
     end
+
+    def my_any?(arg = nil)
+        item = false
+        if !arg.nil?
+            my_each {|element| item == true if arg === element}
+        elsif !block_given?
+            my_each {|element| item == true if element}
+        else
+            my_each {|element| item == true if yield(element)}
+        end
+        item
+    end
 end
