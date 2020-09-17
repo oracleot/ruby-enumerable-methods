@@ -1,10 +1,20 @@
+# rubocop:disable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
+
 module Enumerable
   def my_each
-    # Code here
+    return to_enum(__method__) unless block_given?
+
+    my_iterable = enforce_arr
+    arr_len = my_iterable.length
+    arr_len.times do |index|
+      yield(my_iterable[index])
+    end
+    my_iterable
   end
 
   def my_each_with_index
     return to_enum(__method__) unless block_given?
+
     my_iterable = enforce_arr
     arr_len = my_iterable.length
     arr_len.times do |index|
@@ -14,30 +24,56 @@ module Enumerable
   end
 
   def my_select
-    # Code here
+    return to_enum(:my_select) unless block_given?
+
+    new_arr = []
+    my_each { |item| new_arr << item if yield(item) }
+    new_arr
   end
 
   def my_all?(arg = nil)
     if !arg.nil? && arg.is_a?(Class)
-      my_each { |_class| return false unless _class.is_a? arg }
+      my_each { |block| return false unless block.is_a? arg }
     elsif !arg.nil? && arg.is_a?(Integer)
-      my_each { |_int| return false unless _int == arg }
+      my_each { |block| return false unless block == arg }
     elsif !arg.nil? && arg.is_a?(String) || arg.is_a?(Regexp)
-      my_each { |_str| return false unless _str.match(arg) }
+      my_each { |block| return false unless block.match(arg) }
     elsif !block_given?
-      my_each { |res| return false if res.nil? || !res }
+      my_each { |block| return false if block.nil? || !block }
     else
-      my_each { |res| return false unless yield(res) }
+      my_each { |block| return false unless yield(block) }
     end
     true
   end
 
   def my_any?
-    # Code here
+    if !arg.nil? && arg.is_a?(Class)
+      my_each { |block| return true if block.is_a? arg }
+    elsif !arg.nil? && arg.is_a?(Integer)
+      my_each { |block| return true if block == arg }
+    elsif !arg.nil? && arg.is_a?(String) || arg.is_a?(Regexp)
+      my_each { |block| return true if block.match(arg) }
+    elsif !block_given?
+      my_each { |block| return true unless block.nil? || !block }
+    else
+      my_each { |block| return true if yield(block) }
+    end
+    false
   end
 
   def my_none?
-    # Code here
+    if !arg.nil? && arg.is_a?(Class)
+      my_each { |block| return false if block.is_a? arg }
+    elsif !arg.nil? && arg.is_a?(Integer)
+      my_each { |block| return false if block == arg }
+    elsif !arg.nil? && arg.is_a?(String) || arg.is_a?(Regexp)
+      my_each { |block| return false if block.match(arg) }
+    elsif !block_given?
+      my_each { |block| return false unless block.nil? || !block }
+    else
+      my_each { |block| return false if yield(block) }
+    end
+    true
   end
 
   def my_count
@@ -52,6 +88,8 @@ module Enumerable
     # Code here
   end
 end
+
+# rubocop:enable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
 
 def multiply_els
   # Code here
