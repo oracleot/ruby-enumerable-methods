@@ -40,7 +40,18 @@ module Enumerable
   end
 
   def my_none?
-    # Code here
+    if !arg.nil? && arg.is_a?(Class)
+      my_each { |block| return false if block.is_a? arg }
+    elsif !arg.nil? && arg.is_a?(Integer)
+      my_each { |block| return false if block == arg }
+    elsif !arg.nil? && arg.is_a?(String) || arg.is_a?(Regexp)
+      my_each { |block| return false if block.match(arg) }
+    elsif !block_given?
+      my_each { |block| return false unless block.nil? || !block }
+    else
+      my_each { |block| return false if yield(block) }
+    end
+    true
   end
 
   def my_count
