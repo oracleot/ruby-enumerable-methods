@@ -1,42 +1,10 @@
 module Enumerable
-def my_each
-    my_list = [1, 2, 3, 4]
-     my_list.my_each do |num|
-      num += 3
-        puts "the new number is #{num}."
+    def my_each
+        return to_enum(__method__) unless block_given?
+        counter = 1
+        while counter < arr.lenght
+            yield(arr[counter])
+            counter += 1
+        end
     end
 end
-end
-
-def my_select
-    friends = ['Sharon', 'Leo', 'Leila', 'Brian', 'Arun']
-    invited_list = []
-    friends.my_select do |friends|
-      friends != Brian
-      puts invited_list
-    end
-end
-  
-  def my_any?
-    puts %w[ant bear cat].my_any? do
-      |word| word.length >= 3
-    end
-  end
-
-  def my_count
-    arr = [1, 2, 4, 2]
-    puts arr.my_count #=> 4
-    puts arr.my_count(2)
-  end 
-
-  def my_inject
-    longest = %w[ant bear cat].my_inject do |memo, word|
-        memo.length > word.length ? memo : word
-      end
-      puts longest 
-  end 
-
-  def test_multiple_els
-    puts 'multiply_els'
-    puts multiply_els([2, 4, 5])
-  end 
