@@ -84,11 +84,33 @@ module Enumerable
   end
 
   def my_map
-    # Code here
+    return to_enum(__method__) unless block_given? || proc
+
+    new_arr = []
+    proc ? my_each { |i| new_arr << proc.call(i) } : my_each { |i| new_arr << yield(i) }
+    new_arr
   end
 
-  def my_inject
-    # Code here
+  def my_inject(num = nil, sym = nil)
+    if block_given?
+      accumulator = num
+      my_each do |item|
+        accumulator = accumulator.nil? ? item : yield(accumulator, item)
+      end
+      accumulator
+    elsif !num.nil? && (num.is_a?(Symbol) || num.is_a?(String))
+      accumulator = nil
+      my_each do |item|
+        accumulator = accumulator.nil? ? item : accumulator.send(num, item)
+      end
+      accumulator
+    elsif !sym.nil? && (sym.is_a?(Symbol) || sym.is_a?(String))
+      accumulator = num
+      my_each do |item|
+        accumulator = accumulator.nil? ? item : accumulator.send(sym, item)
+      end
+      accumulator
+    end
   end
 end
 
@@ -96,4 +118,11 @@ end
 
 def multiply_els
   # Code here
+end
+
+def enforce_arr
+  arr = self if self.class == Array
+  arr = to_a if self.class == Range
+  arr = flatten if self.class == Hash
+  arr
 end
