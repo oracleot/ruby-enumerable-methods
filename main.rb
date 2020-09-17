@@ -2,7 +2,14 @@
 
 module Enumerable
   def my_each
-    # Code here
+    return to_enum(__method__) unless block_given?
+
+    my_iterable = enforce_arr
+    arr_len = my_iterable.length
+    arr_len.times do |index|
+      yield(my_iterable[index])
+    end
+    my_iterable
   end
 
   def my_each_with_index
@@ -17,7 +24,11 @@ module Enumerable
   end
 
   def my_select
-    # Code here
+    return to_enum(:my_select) unless block_given?
+
+    new_arr = []
+    my_each { |item| new_arr << item if yield(item) }
+    new_arr
   end
 
   def my_all?(arg = nil)
@@ -36,7 +47,18 @@ module Enumerable
   end
 
   def my_any?
-    # Code here
+    if !arg.nil? && arg.is_a?(Class)
+      my_each { |block| return true if block.is_a? arg }
+    elsif !arg.nil? && arg.is_a?(Integer)
+      my_each { |block| return true if block == arg }
+    elsif !arg.nil? && arg.is_a?(String) || arg.is_a?(Regexp)
+      my_each { |block| return true if block.match(arg) }
+    elsif !block_given?
+      my_each { |block| return true unless block.nil? || !block }
+    else
+      my_each { |block| return true if yield(block) }
+    end
+    false
   end
 
   def my_none?
