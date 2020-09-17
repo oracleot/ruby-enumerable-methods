@@ -1,0 +1,10 @@
+module Enumerable
+    def my_each
+        return to_enum(__method__) unless block_given?
+        counter = 1
+        while counter < arr.lenght
+            yield(arr[counter])
+            counter += 1
+        end
+    end
+end
