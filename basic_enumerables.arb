@@ -38,5 +38,18 @@ module Enumerable
         end
         item
     end
+
+    def my_inject(num= nil, sym = nil ) 
+        if(initial.nil? && sym.nil?) && (initial.is_a? || sym.is_a?)
+            sym = initial
+            initial = nil
+        end
+    if !block_given? && !sym = nil?
+        my_each { |item| initial = initial.nil? ? item : initial.send(sym, item) }
+    else
+        my_each { |item| initial = initial.nil? ? item : yield(initial, item) }
+    end
+      initial
+    end
 end
 
