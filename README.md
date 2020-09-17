@@ -4,16 +4,17 @@ This project is about rebuilding some commonly used iterator methods using Ruby'
 
 Listed below are the *iterator methods* rebuilt in this project:
 
-- my_each
-- my_each_with_index
-- my_select
-- my_all?
-- my_any?
-- my_none?
-- my_count
-- my_map
-- my_inject
-- multiply_els
+- `my_each` - [each](https://ruby-doc.org/core-2.6.5/Enumerable.html#method-i-each_entry)
+- my_each_with_index - [each_with_index](https://ruby-doc.org/core-2.6.5/Enumerable.html#method-i-each_with_index)
+- my_select - [select](https://ruby-doc.org/core-2.6.5/Enumerable.html#method-i-select)
+- my_all? - [all?](https://ruby-doc.org/core-2.6.5/Enumerable.html#method-i-all-3F)
+- my_any? - [any?](https://ruby-doc.org/core-2.6.5/Enumerable.html#method-i-any-3F)
+- my_none? - [none?](https://ruby-doc.org/core-2.6.5/Enumerable.html#method-i-none-3F)
+- my_count - [count](https://ruby-doc.org/core-2.6.5/Enumerable.html#method-i-count)
+- my_map - [map](https://ruby-doc.org/core-2.6.5/Enumerable.html#method-i-map)
+- my_inject - [inject](https://ruby-doc.org/core-2.6.5/Enumerable.html#method-i-inject)
+
+Then one more method `multiply_els` to test #my_inject method
 
 ## Built With
 
