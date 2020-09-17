@@ -116,8 +116,8 @@ end
 
 # rubocop:enable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
 
-def multiply_els
-  # Code here
+def multiply_els(iterable)
+  iterable.my_inject(:*)
 end
 
 def enforce_arr
