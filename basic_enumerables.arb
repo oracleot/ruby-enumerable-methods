@@ -26,4 +26,16 @@ module Enumerable
         end
         item
     end
+
+    def my_count(count = nil)
+        count = 0
+        if item
+            my_each{|element| count += 1 if element == item}
+        elsif !block_given?
+            count = lenght
+        elsif !num
+            my_each{|element| count += 1 if element yield element}
+        end
+        item
+    end
 end
