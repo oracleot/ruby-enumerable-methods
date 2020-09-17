@@ -79,7 +79,9 @@ module Enumerable
   def my_count(count = nil)
     my_iterable = enforce_arr
     return my_iterable.length unless block_given? || count
+
     return my_iterable.my_select { |block| block == count }.length if count
+
     my_iterable.my_select { |block| yield(block) }.length
   end
 
