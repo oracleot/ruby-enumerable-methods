@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
+
 module Enumerable
   def my_each
     # Code here
@@ -5,6 +7,7 @@ module Enumerable
 
   def my_each_with_index
     return to_enum(__method__) unless block_given?
+
     my_iterable = enforce_arr
     arr_len = my_iterable.length
     arr_len.times do |index|
@@ -19,15 +22,15 @@ module Enumerable
 
   def my_all?(arg = nil)
     if !arg.nil? && arg.is_a?(Class)
-      my_each { |_class| return false unless _class.is_a? arg }
+      my_each { |block| return false unless block.is_a? arg }
     elsif !arg.nil? && arg.is_a?(Integer)
-      my_each { |_int| return false unless _int == arg }
+      my_each { |block| return false unless block == arg }
     elsif !arg.nil? && arg.is_a?(String) || arg.is_a?(Regexp)
-      my_each { |_str| return false unless _str.match(arg) }
+      my_each { |block| return false unless block.match(arg) }
     elsif !block_given?
-      my_each { |res| return false if res.nil? || !res }
+      my_each { |block| return false if block.nil? || !block }
     else
-      my_each { |res| return false unless yield(res) }
+      my_each { |block| return false unless yield(block) }
     end
     true
   end
@@ -52,6 +55,8 @@ module Enumerable
     # Code here
   end
 end
+
+# rubocop:enable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
 
 def multiply_els
   # Code here
