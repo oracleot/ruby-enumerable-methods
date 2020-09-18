@@ -9,7 +9,7 @@ module Enumerable
     arr_len.times do |index|
       yield(my_iterable[index])
     end
-    my_iterable
+    self
   end
 
   def my_each_with_index
@@ -20,11 +20,11 @@ module Enumerable
     arr_len.times do |index|
       yield(my_iterable[index], index)
     end
-    my_iterable
+    self
   end
 
   def my_select
-    return to_enum(:my_select) unless block_given?
+    return to_enum(__method__) unless block_given?
 
     new_arr = []
     my_each { |item| new_arr << item if yield(item) }
@@ -46,7 +46,7 @@ module Enumerable
     true
   end
 
-  def my_any?
+  def my_any?(arg = nil)
     if !arg.nil? && arg.is_a?(Class)
       my_each { |block| return true if block.is_a? arg }
     elsif !arg.nil? && arg.is_a?(Integer)
@@ -61,7 +61,7 @@ module Enumerable
     false
   end
 
-  def my_none?
+  def my_none?(arg = nil)
     if !arg.nil? && arg.is_a?(Class)
       my_each { |block| return false if block.is_a? arg }
     elsif !arg.nil? && arg.is_a?(Integer)
@@ -85,7 +85,7 @@ module Enumerable
     my_iterable.my_select { |block| yield(block) }.length
   end
 
-  def my_map
+  def my_map(proc = nil)
     return to_enum(__method__) unless block_given? || proc
 
     new_arr = []
@@ -94,6 +94,8 @@ module Enumerable
   end
 
   def my_inject(num = nil, sym = nil)
+    raise 'LocalJumpError: No block or argument has been given!' if !block_given? && arg[0].nil?
+
     if block_given?
       accumulator = num
       my_each do |item|
