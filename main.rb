@@ -92,7 +92,7 @@ module Enumerable
   end
 
   def my_inject(num = nil, sym = nil)
-    raise LocalJumpError, 'No block has been given!' unless block_given?
+    raise LocalJumpError if !block_given? && num.nil? && sym.nil?
 
     if block_given?
       accumulator = num
