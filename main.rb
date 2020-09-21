@@ -6,7 +6,7 @@ module Enumerable
 
     arr_len = Array(self).length
     arr_len.times do |index|
-      yield(self[index])
+      yield(Array(self)[index])
     end
     self
   end
@@ -16,7 +16,7 @@ module Enumerable
 
     arr_len = Array(self).length
     arr_len.times do |index|
-      yield(self[index], index)
+      yield(Array(self)[index], index)
     end
     self
   end
