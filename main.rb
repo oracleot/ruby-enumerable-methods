@@ -4,10 +4,9 @@ module Enumerable
   def my_each
     return to_enum(__method__) unless block_given?
 
-    my_iterable = enforce_arr
-    arr_len = my_iterable.length
+    arr_len = Array(self).length
     arr_len.times do |index|
-      yield(my_iterable[index])
+      yield(self[index])
     end
     self
   end
@@ -15,10 +14,9 @@ module Enumerable
   def my_each_with_index
     return to_enum(__method__) unless block_given?
 
-    my_iterable = enforce_arr
-    arr_len = my_iterable.length
+    arr_len = Array(self).length
     arr_len.times do |index|
-      yield(my_iterable[index], index)
+      yield(self[index], index)
     end
     self
   end
@@ -77,7 +75,7 @@ module Enumerable
   end
 
   def my_count(count = nil)
-    my_iterable = enforce_arr
+    my_iterable = Array(self)
     return my_iterable.length unless block_given? || count
 
     return my_iterable.my_select { |block| block == count }.length if count
@@ -94,7 +92,7 @@ module Enumerable
   end
 
   def my_inject(num = nil, sym = nil)
-    raise 'LocalJumpError: No block or argument has been given!' if !block_given? && arg[0].nil?
+    raise 'LocalJumpError: No block or argument has been given!' if !block_given? && num.nil?
 
     if block_given?
       accumulator = num
