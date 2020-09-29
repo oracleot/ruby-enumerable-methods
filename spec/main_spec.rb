@@ -111,6 +111,28 @@ describe Enumerable do
         expect(friends.my_all?).to be true
       end
     end
+
+    describe "#my_any" do
+        it "returns true if one element in an array of strings meet a certain condition" do
+            expect(friends.my_any? { |friend| friend.length > 4 }).to be true
+        end
+  
+        it "returns true if one element in an array of integers meet a certain condition" do
+            expect(friends_ages.my_any?(Integer)).to be true
+        end
+  
+        it "returns true if one element within a range meet a certain condition" do
+            expect(age_range.my_any? { |age| age > 17 }).to be true
+        end
+  
+        it "returns false if array is empty" do
+            expect(empty_array.my_any? { |arr_item| arr_item > 10 }).to be false
+        end
+  
+        it 'It returns true if no block is given' do
+          expect(friends.my_any?).to be true
+        end
+      end
 end
 
 
