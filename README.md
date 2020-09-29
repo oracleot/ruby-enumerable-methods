@@ -33,6 +33,19 @@ To get a local copy of the repository please run the following commands on your 
 
     $ cd ruby-enumerable-methods/
 
+## Test
+
+1. Open a terminal
+2. Run 'gem install rspec'
+3. Run 'cd ruby-enumerables'
+4. Run rspec --init’ to install rspec in directory
+
+## Run
+
+1. Run 'rspec' in the terminal
+2. In the terminal, you should see if the tests pass or fail.
+![screenshot](./assets/Capture.PNG)
+
 ## Authors
 
 👤 ** Kamwa Emmanuelle Alix**
