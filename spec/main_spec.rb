@@ -15,29 +15,56 @@ describe Enumerable do
 
     let(:result) { [] }
     let(:actual) { [] }
+
     describe "#my_each" do
         it "returns each individual element of an array of strings" do
-            expect(friends.my_each { |friend| puts friend }).to eql(friends.each { |friend| puts friend }) 
+            expect(friends.my_each { |friend| puts friend }).to eql(friends.each { |friend| puts friend })
         end
 
         it "returns each individual element of an array of integers" do
-            expect(friends_ages.my_each { |age| puts age }).to eql(friends_ages.each { |age| puts age }) 
+            expect(friends_ages.my_each { |age| puts age }).to eql(friends_ages.each { |age| puts age })
         end
 
         it "returns each individual element of a range" do
-            expect(age_range.my_each { |age| puts age }).to eql(age_range.each { |age| puts age }) 
+            expect(age_range.my_each { |age| puts age }).to eql(age_range.each { |age| puts age })
         end
 
         it "returns each individual element and the corresponding key of a hash" do
-            expect(partners.my_each { |partner| puts partner }).to eql(partners.each { |partner| puts partner }) 
+            expect(partners.my_each { |partner| puts partner }).to eql(partners.each { |partner| puts partner })
         end
 
         it "returns nothing" do
-            expect(empty_array.my_each { |arr| puts arr }).to eql(empty_array.each { |arr| puts arr }) 
+            expect(empty_array.my_each { |arr| puts arr }).to eql(empty_array.each { |arr| puts arr })
         end
 
         it "returns an enumerator when no block is given" do
-            expect(age_range.my_each).to be_a(Enumerator) 
+            expect(age_range.my_each).to be_a(Enumerator)
+        end
+    end
+
+    describe "#my_each_with_index" do
+        it "returns each individual element of an array of strings" do
+            expect(friends.my_each_with_index { |friend, index| puts "#{friend}: #{index}" }).to eql(friends.each_with_index { |friend, index| puts "#{friend}: #{index}" })
+        end
+
+        it "returns each individual element of an array of integers" do
+            expect(friends_ages.my_each_with_index { |age, index| puts "#{age}: #{index}" }).to eql(friends_ages.each_with_index { |age, index| puts "#{age}: #{index}" })
+        end
+
+        it "returns each individual element of a range" do
+            expect(age_range.my_each_with_index { |age, index| puts "#{age}: #{index}" }).to eql(age_range.each_with_index { |age, index| puts "#{age}: #{index}" })
+        end
+
+        it "returns each individual element and the corresponding key of a hash" do
+            expect(partners.my_each_with_index { |partner, index| puts "#{partner}: #{index}" }).to eql(partners.each_with_index { |partner, index| puts "#{partner}: #{index}" })
+        end
+
+        it "returns nothing" do
+            expect(empty_array.my_each_with_index { |arr, index| puts "#{arr}: #{index}" }).to eql(empty_array.each_with_index { |arr, index| puts "#{arr}: #{index}" })
+        end
+
+        it "returns an enumerator when no block is given" do
+            expect(age_range.my_each_with_index).to be_a(Enumerator)
         end
     end
 end
@@ -51,4 +78,3 @@ end
 #     puts "\n-- Using my_each:"
 #     p %w[Sharon Leo Leila Brian Arun].each_entry { |friend| puts friend }
 #   end
-  
