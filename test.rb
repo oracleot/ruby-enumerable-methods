@@ -1,3 +1,5 @@
-a = [1,2,4,2,2]
+a = [1,2,4]
+r = 1..10
+proc = Proc.new { |i| i**3 }
 
-p a.count {|x| x%3==0}
+p r.map{|i| i ** 5}

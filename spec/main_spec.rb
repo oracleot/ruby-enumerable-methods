@@ -157,19 +157,33 @@ describe Enumerable do
       end
     end
 
-     describe "#my_count" do
-         it "returns the length of the array" do
-             expect(friends.my_count).to eql(friends.count)
-         end
-
-         it "returns number of elements corresponding to the argument" do
-            expect(friends_ages.my_count(12)).to eql(friends_ages.count(12))
-         end
-
-         it "returns number of elements meeting the condition when a block is given" do
-             expect(friends_ages.my_count {|i| i%12==0}).to eql(friends_ages.count {|i| i%12==0})
-         end
+   describe "#my_count" do
+     it "returns the length of the array" do
+         expect(friends.my_count).to eql(friends.count)
      end
+
+     it "returns number of elements corresponding to the argument" do
+        expect(friends_ages.my_count(12)).to eql(friends_ages.count(12))
+     end
+
+     it "returns number of elements meeting the condition when a block is given" do
+         expect(friends_ages.my_count {|i| i%12==0}).to eql(friends_ages.count {|i| i%12==0})
+     end
+   end
+
+   describe "#my_map" do
+     it "returns a new array with the results of the running block once for every element in enum" do
+       expect(friends_ages.my_map(&proc)).to eql(friends_ages.map(&proc))
+     end
+
+     it "returns a new array with the results of the running block once for every element in a range" do
+       expect(age_range.my_map { |i| i ** 2 }).to eql(age_range.map { |i| i ** 2 })
+     end
+
+     it "returns an Enumerator when no block is given" do
+       expect(friends_ages.my_map).to be_a(Enumerator)
+     end
+   end
 end
 
 
