@@ -156,6 +156,20 @@ describe Enumerable do
         expect(nil_false.my_none?).to be true
       end
     end
+
+     describe "#my_count" do
+         it "returns the length of the array" do
+             expect(friends.my_count).to eql(friends.count)
+         end
+
+         it "returns number of elements corresponding to the argument" do
+            expect(friends_ages.my_count(12)).to eql(friends_ages.count(12))
+         end
+
+         it "returns number of elements meeting the condition when a block is given" do
+             expect(friends_ages.my_count {|i| i%12==0}).to eql(friends_ages.count {|i| i%12==0})
+         end
+     end
 end
 
 
