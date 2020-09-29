@@ -67,6 +67,28 @@ describe Enumerable do
             expect(age_range.my_each_with_index).to be_a(Enumerator)
         end
     end
+
+    describe "#my_select" do
+        it "returns selected elements in an array of strings" do
+            expect(friends.my_select { |friend| friend != 'Brian' }).to eql(friends.select { |friend| friend != 'Brian' })
+        end
+
+        it "returns selected elements in an array of integers" do
+            expect(friends_ages.my_select { |age| age>17 }).to eql(friends_ages.select { |age| age>17 })
+        end
+
+        it "returns selected elements of a range" do
+            expect(age_range.my_select { |age| age> 17 }).to eql(age_range.select { |age| age> 17 })
+        end
+
+        it "returns nothing" do
+            expect(empty_array.my_select { |arr| arr != 'Brian' }).to eql(empty_array.select { |arr| arr != 'Brian' })
+        end
+
+        it "returns an enumerator when no block is given" do
+            expect(age_range.my_select).to be_a(Enumerator)
+        end 
+    end
 end
 
 
