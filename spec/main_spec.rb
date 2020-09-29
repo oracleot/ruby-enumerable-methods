@@ -7,9 +7,6 @@ describe Enumerable do
     let(:partners) { { 'Dami' => 31, 'Ntwali' => 23, 'Mahanta' => 28, 'Sine' => 26 } }
     let(:empty_array) { [] }
     let(:nil_true) { [nil, true, 99] }
-    let(:str_num) { ['Daniel', 50, 3.5] }
-    let(:float_nums) { [2.5, 5, 5.6] }
-    let(:zero_nums) { [0, 0, 0, 0, 0, 2, 54, 34, 0] }
     let(:nil_false) { [nil, false] }
     let(:proc) { Proc.new { |i| i**3 } }
 
@@ -169,6 +166,28 @@ describe Enumerable do
          it "returns number of elements meeting the condition when a block is given" do
              expect(friends_ages.my_count {|i| i%12==0}).to eql(friends_ages.count {|i| i%12==0})
          end
+     end
+
+     describe "#my_inject" do
+         it "returns amount using the symbol in the parameter as mathematical operator" do
+             expect(friends_ages.my_inject(:+)).to eql(190)
+         end
+
+         it "returns sum of numbers in the array using the first parameter as accumulator" do
+            expect(friends_ages.my_inject(2, :+)).to eql(192)
+        end
+
+        it "returns the instructions specified in the block" do
+            expect(friends_ages.my_inject {|acc, value| acc+value}).to eql(friends_ages.inject {|acc, value| acc+value})
+        end
+
+        it "returns the instructions specified in the block using the parameter as an accumulator" do
+            expect(friends_ages.my_inject(2) {|acc, value| acc+value}).to eql(friends_ages.inject(2) {|acc, value| acc+value})
+        end
+
+        it "returns the longest word" do
+            expect(friends.my_inject {|memo, word| memo.length > word.length ? memo : word}).to eql(friends.inject {|memo, word| memo.length > word.length ? memo : word})
+        end
      end
 end
 
