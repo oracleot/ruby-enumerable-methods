@@ -1,3 +1,3 @@
-a= { 'Dami' => 31, 'Ntwali' => 23, 'Mahanta' => 28, 'Sine' => 26 }
+a = [10, 5]
 
-p a.select {|key, value| value>24}
+p a.all?

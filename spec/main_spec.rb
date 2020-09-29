@@ -87,7 +87,29 @@ describe Enumerable do
 
         it "returns an enumerator when no block is given" do
             expect(age_range.my_select).to be_a(Enumerator)
-        end 
+        end
+    end
+
+    describe "#my_all" do
+      it "returns false if not all elements in an array of strings meet a certain condition" do
+          expect(friends.my_all? { |friend| friend.length > 4 }).to be false
+      end
+
+      it "returns true if all elements in an array of integers meet a certain condition" do
+          expect(friends_ages.my_all? { |age| age > 10 }).to be true
+      end
+
+      it "returns false if not all elements within a range meet a certain condition" do
+          expect(age_range.my_all? { |age| age > 17 }).to be false
+      end
+
+      it "returns true if array is empty" do
+          expect(empty_array.my_all? { |arr_item| arr_item > 10 }).to be true
+      end
+
+      it 'It returns false if no block is given' do
+        expect(friends.my_all?).to be true
+      end
     end
 end
 
