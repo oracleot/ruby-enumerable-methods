@@ -11,7 +11,7 @@ describe Enumerable do
   let(:float_nums) { [2.5, 5, 5.6] }
   let(:zero_nums) { [0, 0, 0, 0, 0, 2, 54, 34, 0] }
   let(:nil_false) { [nil, false] }
-  let(:proc) { Proc.new { |i| i**3 } }
+  let(:proc_block) { proc { |i| i**3 } }
 
   describe '#my_each' do
     it 'returns each individual element of an array of strings' do
@@ -35,19 +35,39 @@ describe Enumerable do
   end
   describe '#my_each_with_index' do
     it 'returns each individual element of an array of strings' do
-      expect(friends.my_each_with_index { |friend, index| puts "#{friend}: #{index}" }).to eql(friends.each_with_index { |friend, index| puts "#{friend}: #{index}" })
+      expect(friends.my_each_with_index do |friend, index|
+        puts "#{friend}: #{index}"
+      end).to eql(friends.each_with_index do |friend, index|
+        puts "#{friend}: #{index}"
+      end)
     end
     it 'returns each individual element of an array of integers' do
-      expect(friends_ages.my_each_with_index { |age, index| puts "#{age}: #{index}" }).to eql(friends_ages.each_with_index { |age, index| puts "#{age}: #{index}" })
+      expect(friends_ages.my_each_with_index do |age, index|
+        puts "#{age}: #{index}"
+      end).to eql(friends_ages.each_with_index do |age, index|
+        puts "#{age}: #{index}"
+      end)
     end
     it 'returns each individual element of a range' do
-      expect(age_range.my_each_with_index { |age, index| puts "#{age}: #{index}" }).to eql(age_range.each_with_index { |age, index| puts "#{age}: #{index}" })
+      expect(age_range.my_each_with_index do |age, index|
+        puts "#{age}: #{index}"
+      end).to eql(age_range.each_with_index do |age, index|
+        puts "#{age}: #{index}"
+      end)
     end
     it 'returns each individual element and the corresponding key of a hash' do
-      expect(partners.my_each_with_index { |partner, index| puts "#{partner}: #{index}" }).to eql(partners.each_with_index { |partner, index| puts "#{partner}: #{index}" })
+      expect(partners.my_each_with_index do |partner, index|
+        puts "#{partner}: #{index}"
+      end).to eql(partners.each_with_index do |partner, index|
+        puts "#{partner}: #{index}"
+      end)
     end
     it 'returns nothing' do
-      expect(empty_array.my_each_with_index { |arr, index| puts "#{arr}: #{index}" }).to eql(empty_array.each_with_index { |arr, index| puts "#{arr}: #{index}" })
+      expect(empty_array.my_each_with_index do |arr, index|
+        puts "#{arr}: #{index}"
+      end).to eql(empty_array.each_with_index do |arr, index|
+        puts "#{arr}: #{index}"
+      end)
     end
     it 'returns an enumerator when no block is given' do
       expect(age_range.my_each_with_index).to be_a(Enumerator)
@@ -137,7 +157,7 @@ describe Enumerable do
   end
   describe '#my_map' do
     it 'returns a new array with the results of the running block once for every element in enum' do
-      expect(friends_ages.my_map(&proc)).to eql(friends_ages.map(&proc))
+      expect(friends_ages.my_map(&proc_block)).to eql(friends_ages.map(&proc_block))
     end
     it 'returns a new array with the results of the running block once for every element in a range' do
       expect(age_range.my_map { |i| i**2 }).to eql(age_range.map { |i| i**2 })
@@ -157,15 +177,27 @@ describe Enumerable do
     end
 
     it 'returns the instructions specified in the block' do
-      expect(friends_ages.my_inject { |acc, value| acc + value }).to eql(friends_ages.inject { |acc, value| acc + value })
+      expect(friends_ages.my_inject do |acc, value|
+        acc + value
+      end).to eql(friends_ages.inject do |acc, value|
+        acc + value
+      end)
     end
 
     it 'returns the instructions specified in the block using the parameter as an accumulator' do
-      expect(friends_ages.my_inject(2) { |acc, value| acc + value }).to eql(friends_ages.inject(2) { |acc, value| acc + value })
+      expect(friends_ages.my_inject(2) do |acc, value|
+        acc + value
+      end).to eql(friends_ages.inject(2) do |acc, value|
+        acc + value
+      end)
     end
 
     it 'returns the longest word' do
-      expect(friends.my_inject { |memo, word| memo.length > word.length ? memo : word }).to eql(friends.inject { |memo, word| memo.length > word.length ? memo : word })
+      expect(friends.my_inject do |memo, word|
+        memo.length > word.length ? memo : word
+      end).to eql(friends.inject do |memo, word|
+        memo.length > word.length ? memo : word
+      end)
     end
   end
 end
