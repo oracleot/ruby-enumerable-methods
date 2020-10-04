@@ -58,6 +58,12 @@ To get a local copy of the repository please run the following commands on your 
 
 -   Github: [oracleot](https://github.com/oracleot)
 
+👤  **Ntwali Heritier**
+
+- Github: [@NtwaliHeritier](https://github.com/NtwaliHeritier)
+- Twitter: [@NtwaliHeritier](https://twitter.com/NtwaliHeritier)
+- Linkedin: [Ntwali Heritier](https://linkedin.com/in/ntwali-heritier-9950001a2)
+
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome!
